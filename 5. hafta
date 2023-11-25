@@ -1,0 +1,26 @@
+# Gerekli modülleri dahil et
+import numpy as np
+import cv2
+import imutils
+
+# Fotoğrafı oku
+image = cv2.imread("rice.jpg")
+
+# Fotoğrafı gri tonlamaya dönüştür
+grayImage = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+# Eşik değeri belirle
+thresh = 200
+
+# Fotoğrafı ikili olarak ayır
+binaryImage = cv2.threshold(grayImage, thresh, 255, cv2.THRESH_BINARY_INV)[1]
+
+# Fotoğraftaki beyaz nesnelerin konturlarını bul
+contours = cv2.findContours(binaryImage, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+contours = imutils.grab_contours(contours)
+
+# Kontur listesinin uzunluğunu al
+count = len(contours)
+
+# Pirinç tanelerinin sayısını ekrana yazdır
+print("Pirinç tanelerinin sayısı:", count)
